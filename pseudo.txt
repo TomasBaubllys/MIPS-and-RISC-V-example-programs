@@ -1,0 +1,33 @@
+// Author: Tomas Baublys
+// Pseudocode for the function substr(string, keyword)
+
+Function substr(string, keyword):
+
+1. Check if the input strings are valid
+   - If string is NULL or keyword is NULL:
+       - Return NULL
+
+2. Iterate through each character in the main string
+   - While string is not at end (string != '\0'):
+       - If the current character of string matches the first character of keyword:
+           - Set pointer1 to the current position in string
+           - Set pointer2 to the start of keyword
+
+       - Check if the following characters match
+           - While True:
+               - If pointer1 is at the end of the string:
+                   - Return NULL
+
+               - If pointer2 is at the end of keyword:
+                   - Return the current position in string
+
+               - If characters at pointer1 and pointer2 don’t match:
+                   - Move to the next character in string
+                   - Exit the inner loop
+
+               - Move pointer1 to the next character in string
+               - Move pointer2 to the next character in keyword
+
+       - Move to the next character in string
+
+3. Return NULL if keyword not found
