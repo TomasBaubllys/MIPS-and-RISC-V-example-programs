@@ -4,12 +4,13 @@
 # Values are defined in the data segment
 
 .eqv NULL 0
-.eqv MAX_STR_LEN 255					# defines the maximum length of the string
+.eqv MAX_STR_LEN 64					# defines the maximum length of the string
 
 .data
 	enter_str_msg: 	.asciiz "Welcome to the substring function implementation in MiPS\nPlease enter the main string:\n"
 	enter_substr_keyword_msg: .asciiz "Please enter the keyword to look for:\n"
 	str: .space MAX_STR_LEN
+	newline: .byte '\n'
 	substr_keyword: .space MAX_STR_LEN
 	
 .globl main
@@ -39,9 +40,9 @@ main:
 	la $a1, substr_keyword				# load the address of substr_keyword to a1
 	jal substr					# call the substring function
 	
-	beqz $v0, exit					# if null was returned terminate the prgram 
-	move $a0, $v0					# move the address returned by the substr to a0
-	li $v0, 4					# load the 4 (syscall for print to v0)
+	beqz $v0, exit					# if null was returned terminate the program 
+	addi $a0, $v0, 0				# move the address returned by the substr to a0
+	addi $v0, $zero, 4				# load the 4 (syscall for print to v0)
 	syscall						# make the syscall
 	
 	exit:
@@ -93,6 +94,4 @@ substr:
 	_substr_matcher_return:
 	addi $v0, $t5, -1				# load the start of the substring to v0 
 	jr $ra						# return
-	 
-	  
 	
