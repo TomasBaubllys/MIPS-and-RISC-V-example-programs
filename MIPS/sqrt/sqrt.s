@@ -1,17 +1,31 @@
+# Author: Tomas Baublys
+# Newtons square root approximation in MIPS assembly language
+
 .eqv ITERATIONS 50			# define the number of iterations for sqrt
 
 .data
-	number: .float 13.13
-	one_half: .float 0.5
-	initial_guess: .float 3.7
+	input_msg: .asciiz "Enter a number to calculate the square root of:\n"
+	output_msg: .asciiz "Result: "	
+	one_half: .float 0.5		# constant used for calculations
+	initial_guess: .float 1		# initial guess is set to 1 also used for approximating
 .globl main
 
 .text
 
 main:
-	la $t0, number			# load the address of the number in the data segment to t0
-	l.s $f12, number		# load the floating point value to f12 register to pass to the sqrt functiom	
+	la $a0, input_msg			# load the address of our messege to a0
+	li $v0, 4			# load imm 4 to v0 to make the syscall print string
+	syscall				# make the syscall
+	
+	li $v0, 6			# load imm 6 to v0 to make the syscall read float
+	syscall 			# make the syscall 	
+
+	mov.s $f12, $f0			# move our the read number from f0 to f12 to pass it as an argument 	
 	jal sqrt			# call the function with the argument in f12
+	
+	la $a0, output_msg		# load the address of output message to a0
+	li $v0, 4			# load imm 4 to v0 to make the syscall print string
+	syscall				# make the syscall  
 	
 	mov.s $f12, $f0			# move the result of the function to f12
 	li $v0, 2			# syscall print float
@@ -21,7 +35,6 @@ main:
 	li $v0, 10
 	syscall
 	
-	sq
 	
 # expects argument to be in f12 register
 sqrt:
