@@ -8,6 +8,7 @@
 	output_msg: .asciiz "Result: "	
 	one_half: .float 0.5		# constant used for calculations
 	initial_guess: .float 1		# initial guess is set to 1 also used for approximating
+	zero: .float 0			# used for returning 0
 .globl main
 
 .text
@@ -21,7 +22,7 @@ main:
 	syscall 			# make the syscall 	
 
 	mov.s $f12, $f0			# move our the read number from f0 to f12 to pass it as an argument 	
-	jal sqrt			# call the function with the argument in f12
+	jal newtons_sqrt			# call the function with the argument in f12
 	
 	la $a0, output_msg		# load the address of output message to a0
 	li $v0, 4			# load imm 4 to v0 to make the syscall print string
@@ -32,12 +33,17 @@ main:
 	syscall 			# make the call
 	
 	#exit
+	exit:
 	li $v0, 10
 	syscall
 	
 	
 # expects argument to be in f12 register
-sqrt:
+newtons_sqrt:
+	l.s $f0, zero			# load zero to the return register
+	c.lt.s $f12, $f0		# if argument was less than zero return 0
+	bc1t _newtons_sqrt_return_0	# return if coprocessor flag is set to true
+
 	li $t0, ITERATIONS		# load the number of iterations for calculating sqrt to t0	
 	l.s $f4, initial_guess
 	l.s $f10, one_half		# load 1/2 to f10, that will be used for calculations
@@ -53,3 +59,6 @@ sqrt:
 	mov.s $f0, $f4			# move the result to the register f0 (tipically used for returning)
 	
 	jr $ra				# return to the main function
+
+	_newtons_sqrt_return_0:
+	jr $ra
