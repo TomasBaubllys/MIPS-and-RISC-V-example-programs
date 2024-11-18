@@ -50,3 +50,15 @@ The C programs are managed with a `Makefile`. You can build and run the C progra
    ```bash
    make
 
+### MIPS Programs
+
+1. Download Mars v4.5 from the link provided above
+2. Open the .s assembly program in Mars
+3. Click **build** and then **run** using the simulator
+
+
+### Risc-V programs
+
+1. Download Ripes v2.2.6 from the link provided above
+2. Open the .s assembly program in Ripes as a source file 
+3. Click **run** to run the program
