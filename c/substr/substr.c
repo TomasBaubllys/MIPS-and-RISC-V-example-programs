@@ -4,16 +4,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_INPUT 64
+
 char *substr(char *str, char *substr_keyword);
 
 int main(void) {
-    char *str = "I calculated Pi and it`s s`ti dna iP detaluclac I";
-    char *substr_keyword = "Pi";
+    char str[MAX_INPUT];
+    char substr_keyword[MAX_INPUT];
+
+    printf("Welcome to substring algorithm in C enter a string:\n");
+    scanf("%63s\n", str);
+
+    printf("Enter the substring keyword:\n");
+    scanf("%63s\n", substr_keyword);
 
     char *newstr = substr(str, substr_keyword);
 
     if(newstr) {
-        printf("%s\n", newstr);
+        printf("Result: %s\n", newstr);
     }
 
     return 0;
