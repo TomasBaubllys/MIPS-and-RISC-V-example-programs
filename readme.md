@@ -49,9 +49,10 @@ The C programs are managed with a `Makefile`. You can build and run the C progra
    Navigate to the directory containing the `Makefile`, and run:
    ```bash
    make
-2. Run the program with:
-  ```bash
+2. **Run the program with**:
+   ```bash
    ./example
+
 
 ### MIPS Programs
 
