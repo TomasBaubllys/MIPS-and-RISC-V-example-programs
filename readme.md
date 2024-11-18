@@ -30,7 +30,7 @@ This project consists of C, MIPS, and RISC-V programs tested on a specific envir
 ### MIPS Programs
 
 - **Simulator**: MARS version 4.5
-- **Source**: [MARS MIPS Simulator](https://computerscience.missouristate.edu/mars-mips-simulator.html)
+- **Source**: [MARS MIPS Simulator](https://computerscience.missouristate.edu/mars-mips-simulator.htm)
 - MIPS programs are tested using the MARS simulator for execution and debugging.
 
 ### RISC-V Programs
