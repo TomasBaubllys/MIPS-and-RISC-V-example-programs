@@ -1,16 +1,3 @@
-All programs were tested on Arch Linux x86-64
-Kernel: 6.11.6-arch1-1
-CPU: Intel i5-8350U (8) @ 3.600GHz 
-
-C programs:
-gcc version 14.2.1
-
-MIPS programs:
-Mars version 4.5 from https://computerscience.missouristate.edu/mars-mips-simulator.html
-
-Risc-V programs:
-Ripes version 2.2.6 from https://ripes.me/Ripes/# Project Setup and Testing Environment
-
 This project consists of C, MIPS, and RISC-V programs tested on a specific environment. Below is the detailed setup for each type of program and the tools used for testing.
 
 ## System Information
