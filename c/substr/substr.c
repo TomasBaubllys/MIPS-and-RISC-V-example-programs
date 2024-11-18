@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_INPUT 64
 
@@ -13,10 +14,18 @@ int main(void) {
     char substr_keyword[MAX_INPUT];
 
     printf("Welcome to substring algorithm in C enter a string:\n");
-    scanf("%63s\n", str);
+    if(!fgets(str, MAX_INPUT - 1, stdin)) {
+        return 1;
+    };
+
+    str[strcspn(str, "\n")] = '\0';
 
     printf("Enter the substring keyword:\n");
-    scanf("%63s\n", substr_keyword);
+    if(!fgets(substr_keyword, MAX_INPUT - 1, stdin)) {
+        return 1;
+    }
+
+    substr_keyword[strcspn(substr_keyword, "\n")] = '\0';
 
     char *newstr = substr(str, substr_keyword);
 
