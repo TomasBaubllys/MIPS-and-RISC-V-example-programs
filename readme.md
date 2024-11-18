@@ -53,7 +53,6 @@ The C programs are managed with a `Makefile`. You can build and run the C progra
    ```bash
    ./example
 
-
 ### MIPS Programs
 
 1. Download Mars v4.5 from the link provided above
