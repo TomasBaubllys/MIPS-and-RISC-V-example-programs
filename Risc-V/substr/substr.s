@@ -14,7 +14,8 @@
 .text
 
 main:
-    la a0, msg1                                                 # load the address of the first message to a0
+    lui a0, %hi(msg1)                                           # load the address of the first message to a0
+    addi a0, a0, %lo(msg1)
     addi a7, zero, 4                                            # load imm 4 to a7 to call print string
     ecall                                                       # make the syscall
     
@@ -32,9 +33,10 @@ main:
     sb zero, -1(t1)                                             # add a null terminating character instead of '\n'
     
     addi sp, sp -MAX_INPUT                                      # make space on the stack for the next argument (substr_keyword)
-    mv s2, sp                                                   # save the current stack pointer to s2 - beginning of substr_keyword
+    add s2, sp, zero                                            # save the current stack pointer to s2 - beginning of substr_keyword
     
-    la a0, msg2                                                 # load the address of the first message to a0
+    lui a0, %hi(msg2)                                           # load the address of the first message to a0
+    addi a0, a0, %lo(msg2)
     addi a7, zero, 4                                            # load imm 4 to a7 to call print string
     ecall                                                       # make the syscall
     
@@ -48,7 +50,8 @@ main:
     add t1, t1, a0                                              # add the amount of bytes read to the address at t1, to set it after the last byte
     sb zero, -1(t1)                                             # add a null terminating character instead of '\n'
     
-    la a0, result_msg
+    lui a0, %hi(result_msg)
+    addi a0, a0, %lo(result_msg)
     addi a7, zero, 4
     ecall
     
