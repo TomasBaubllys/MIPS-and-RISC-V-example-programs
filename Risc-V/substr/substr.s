@@ -15,19 +15,19 @@
 
 main:
     la a0, msg1                                                 # load the address of the first message to a0
-    li a7, 4                                                    # load imm 4 to a7 to call print string
+    addi a7, zero, 4                                            # load imm 4 to a7 to call print string
     ecall                                                       # make the syscall
     
     addi sp, sp, -MAX_INPUT                                     # move the stack pointer by MAX_INPUT to make space for the str
-    mv s1, sp                                                   # save the current stack pointer for the variable str
+    add s1, sp, zero                                            # save the current stack pointer for the variable str
     
-    li a7, 63                                                   # load imm 63 to a7 to make the syscall read(file descriptor, buffer, max character to read)
-    li a0, 0                                                    # 0 - stdin
-    mv a1, s1                                                   # move s1 to a1 to pass as buffer to read syscall
-    li a2, MAX_INPUT                                            # load the maximum characters to read from the console to a2
+    addi a7, zero, 63                                           # load imm 63 to a7 to make the syscall read(file descriptor, buffer, max character to read)
+    addi a0, zero, 0                                            # 0 - stdin
+    add a1, s1, zero                                            # move s1 to a1 to pass as buffer to read syscall
+    addi a2, zero, MAX_INPUT                                    # load the maximum characters to read from the console to a2
     ecall                                                       # make the syscall
     
-    mv t1, s1                                                   # move the str address to t1
+    add t1, s1, zero                                            # move the str address to t1
     add t1, t1, a0                                              # add the amount of bytes read to the address at t1, to set it after the last byte
     sb zero, -1(t1)                                             # add a null terminating character instead of '\n'
     
@@ -35,32 +35,32 @@ main:
     mv s2, sp                                                   # save the current stack pointer to s2 - beginning of substr_keyword
     
     la a0, msg2                                                 # load the address of the first message to a0
-    li a7, 4                                                    # load imm 4 to a7 to call print string
+    addi a7, zero, 4                                            # load imm 4 to a7 to call print string
     ecall                                                       # make the syscall
     
-    li a7, 63                                                   # load imm 63 to a7 to make the syscall read(file descriptor, buffer, max character to read)
-    li a0, 0                                                    # 0 - stdin
-    mv a1, s2                                                   # move s1 to a1 to pass as buffer to read syscall
-    li a2, MAX_INPUT                                            # load the maximum characters to read from the console to a2
+    addi a7, zero, 63                                           # load imm 63 to a7 to make the syscall read(file descriptor, buffer, max character to read)
+    addi a0, zero, 0                                            # 0 - stdin
+    add a1, s2, zero                                            # move s1 to a1 to pass as buffer to read syscall
+    addi a2, zero, MAX_INPUT                                    # load the maximum characters to read from the console to a2
     ecall
     
-    mv t1, s2                                                   # move the substr_keyword address to t1
+    add t1, s2, zero                                            # move the substr_keyword address to t1
     add t1, t1, a0                                              # add the amount of bytes read to the address at t1, to set it after the last byte
     sb zero, -1(t1)                                             # add a null terminating character instead of '\n'
     
     la a0, result_msg
-    li a7, 4
+    addi a7, zero, 4
     ecall
     
-    mv a0, s1                                                   # load str from the data segment to a0 to pass as function argument char *str
-    mv a1, s2                                                   # load substr_keyword from the data segment to a1 to pass as function argument char *substr_keyword
+    add a0, s1, zero                                            # load str from the data segment to a0 to pass as function argument char *str
+    add a1, s2, zero                                            # load substr_keyword from the data segment to a1 to pass as function argument char *substr_keyword
 
     jal ra, substr                                              # call the function void *substr(char *str, char *substr_keyword) as substr(a0, a1)
     
-    li t1, NULL                                                 # check if not substrings were found
+    addi t1, zero, NULL                                         # check if not substrings were found
     beq a0, t1, exit
     
-    li a7, 4                                                    # else a7 = 4, to make the system call for print_string();
+    addi a7, zero, 4                                            # else a7 = 4, to make the system call for print_string();
     ecall                                                       # make the system call
 
     addi sp, sp, MAX_INPUT                                      # delete substr_keyword from stack
@@ -75,7 +75,7 @@ main:
 # doesn`t preserve a0, a1, and t1-t5
 # void *substr(char *str, char *substr_keyword)
 substr:
-        mv t1, a1                                               # move a1 (substr_keyword) to t1 as we will need a1 later
+        add t1, a1, zero                                        # move a1 (substr_keyword) to t1 as we will need a1 later
         lb t3, (0)t1                                            # load the first character of substr_keyword to t3
     
     # loop through the string
@@ -112,8 +112,8 @@ substr:
             j _substr_matcher_loop                              # no conditions were met continue the loop
         
         _substr_matcher_go_back:
-            mv a0, t5                                           # reset the pointer to our string to next character before this function call
-            mv t1, a1                                           # reset the pointer to substr_keyword to the beginning
+            add a0, t5, zero                                    # reset the pointer to our string to next character before this function call
+            add t1, a1, zero                                    # reset the pointer to substr_keyword to the beginning
             j _substr_loop_continue            
         
         _substr_matcher_return:
