@@ -20,30 +20,30 @@
 
 main:
 	la $a0, msg1					# load the address of the first message to a0
-	li $v0, 4					# load imm 4 to v0 to make the syscall print string
+	addi $v0, $zero, 4					# load imm 4 to v0 to make the syscall print string
 	syscall						# make the syscall
 	
 	la $a0, str					# load the address of the string to a0
-	li $a1, MAX_INPUT				# load the maximum amount of characters we want to read from the console
-	li $v0, 8					# load imm 8 to v0 to make the syscall read string
+	addi $a1, $zero, MAX_INPUT				# load the maximum amount of characters we want to read from the console
+	addi $v0, $zero, 8					# load imm 8 to v0 to make the syscall read string
 	syscall						# make the syscall
 	
 	jal remove_first_newline			# remove the newline added to the string when reading it from the terminal
 	
 	la $a0, msg2					# load the address of the second message to a0
-	li $v0, 4					# load imm 4 to v0 to make the syscall print string
+	addi $v0, $zero, 4					# load imm 4 to v0 to make the syscall print string
 	syscall						# make the syscall
 	
 	la $a0, substr_keyword				# load the address of the string to a0
-	li $a1, MAX_INPUT				# load the maximum amount of characters we want to read from the console
-	li $v0, 8					# load imm 8 to v0 to make the syscall read string
+	addi $a1, $zero, MAX_INPUT				# load the maximum amount of characters we want to read from the console
+	addi $v0, $zero, 8					# load imm 8 to v0 to make the syscall read string
 	syscall						# make the syscall
 	
 	jal remove_first_newline			# remove the newline added to the string when reading it from the terminal
 	
 	
 	la $a0, result_msg				# load the address of the result message message to a0
-	li $v0, 4					# load imm 4 to v0 to make the syscall print string
+	addi $v0, $zero, 4					# load imm 4 to v0 to make the syscall print string
 	syscall						# make the syscall
 
 	la $a0, str					# load the address of str to a0
@@ -51,8 +51,8 @@ main:
 	jal substr					# call the substring function
 	
 	beqz $v0, exit					# if null was returned terminate the prgram 
-	move $a0, $v0					# move the address returned by the substr to a0
-	li $v0, 4					# load the 4 (syscall for print to v0)
+	addu $a0, $zero, $v0					# move the address returned by the substr to a0
+	addi $v0, $zero, 4					# load the 4 (syscall for print to v0)
 	syscall						# make the syscall
 	
 	exit:
@@ -64,8 +64,8 @@ main:
 # strings must be null terminated!
 # returns a the pointer to the beginning of the string in the original string, does not make a copy
 substr:
-	move $t1, $a0					# load the address of str to t1 (temporary register)	 
-	move $t2, $a1					# load the address of substr_keyword to t2 (temporary register)
+	addu $t1, $zero, $a0				# load the address of str to t1 (temporary register)	 
+	addu $t2, $zero, $a1					# load the address of substr_keyword to t2 (temporary register)
 	
 	_substr_loop:					# label for the main loop
 	lb $t3, 0($t1)					# load the values stored in addresses t1 and t2 (*str and *substr_keyword)
@@ -100,8 +100,8 @@ substr:
 	j _substr_matcher_loop				# no conditions were met, continue the matching
 	 
 	 _substr_matcher_go_back:
-	move $t1, $t5					# move the saved value in t5 (next character of str after starting the matching) to t1 
-	move $t2, $t6					# move the beginning of substr_keyword to t2
+	addu $t1, $zero, $t5					# move the saved value in t5 (next character of str after starting the matching) to t1 
+	addu $t2, $zero, $t6					# move the beginning of substr_keyword to t2
 	j _substr_loop					# move back to the initial loop
 	 
 	_substr_matcher_return:
@@ -114,7 +114,7 @@ substr:
 # void remove_first_newline(char *str) or remove_frist_newline(a0)
 remove_first_newline:
 	beq $a0, NULL, _remove_first_newline_return	# if char *str was NULL return
-	move $t0, $a0					# move a0 value to t0 to preserve it
+	addu $t0, $zero, $a0					# move a0 value to t0 to preserve it
 	
 	_remove_first_newline_loop:
 	lb $t1, 0($t0)					# load the character at the address t0 to t1
@@ -126,7 +126,7 @@ remove_first_newline:
 	j _remove_first_newline_loop			# no conditions where met continue the loop
 				
 	_remove_first_newline_replace:
-	li $t2, 0					# load 0 to t2
+	addi $t2, $zero, 0					# load 0 to t2
 	sb $t2, 0($t0)					# store the newline character at the address pointed by t0	
 	
 	_remove_first_newline_return:
