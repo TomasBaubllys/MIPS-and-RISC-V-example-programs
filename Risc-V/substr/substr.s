@@ -78,8 +78,8 @@ main:
 # doesn`t preserve a0, a1, and t1-t5
 # void *substr(char *str, char *substr_keyword)
 substr:
-        add t1, a1, zero                                        # move a1 (substr_keyword) to t1 as we will need a1 later
-        lb t3, (0)t1                                            # load the first character of substr_keyword to t3
+    add t1, a1, zero                                            # move a1 (substr_keyword) to t1 as we will need a1 later
+    lb t3, (0)t1                                                # load the first character of substr_keyword to t3
     
     # loop through the string
     _substr_loop:
